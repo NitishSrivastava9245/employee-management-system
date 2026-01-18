@@ -29,4 +29,3 @@ This application allows users to perform basic CRUD operations on employee data.
 
 ---
 
-## 🏗️ Project Structure
