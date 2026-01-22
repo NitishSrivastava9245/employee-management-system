@@ -1,7 +1,7 @@
 package com.ems.controller;
 
 import com.ems.model.Employee;
-import com.ems.repository.EmployeeRepository;
+import com.ems.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,20 +12,32 @@ import java.util.List;
 public class EmployeeController {
 
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private EmployeeService employeeService;
 
     @GetMapping
     public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
-    }
-
-    @PostMapping
-    public Employee createEmployee(@RequestBody Employee employee) {
-        return employeeRepository.save(employee);
+        return employeeService.getAllEmployees();
     }
 
     @GetMapping("/{id}")
     public Employee getEmployeeById(@PathVariable Long id) {
-        return employeeRepository.findById(id).orElse(null);
+        return employeeService.getEmployeeById(id);
+    }
+
+    @PostMapping
+    public Employee createEmployee(@RequestBody Employee employee) {
+        return employeeService.createEmployee(employee);
+    }
+
+    @PutMapping("/{id}")
+    public Employee updateEmployee(@PathVariable Long id,
+                                   @RequestBody Employee employee) {
+        return employeeService.updateEmployee(id, employee);
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteEmployee(@PathVariable Long id) {
+        employeeService.deleteEmployee(id);
+        return "Employee deleted successfully";
     }
 }
